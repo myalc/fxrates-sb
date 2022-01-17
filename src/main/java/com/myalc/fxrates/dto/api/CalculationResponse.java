@@ -78,7 +78,10 @@ public class CalculationResponse implements Serializable {
         return "{" +
             " targetAmount='" + getTargetAmount() + "'" +
             ", transactionId='" + getTransactionId() + "'" +
+            ", sourceCurrency='" + getSourceCurrency() + "'" +
+            ", targetCurrency='" + getTargetCurrency() + "'" +
             "}";
     }
+ 
 
 }

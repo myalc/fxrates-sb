@@ -18,7 +18,6 @@ public class PaginatedCalculationMapper {
         List<CalculationResponse> calcs = new ArrayList<>();
         for (Calculation c : pages.getContent()) {
             calcs.add(new CalculationResponse(c.getTargetAmount(), c.getTransactionId().toString(), c.getSourceCurrency(), c.getTargetCurrency()));
-            //calcs.add(new CalculationResponse(c.getTargetAmount(), c.getTransactionId().toString()));
         }
 
         PaginatedCalculationResponse response = new PaginatedCalculationResponse(calcs, pages.getNumber(), pages.getTotalElements(), pages.getTotalPages());

@@ -19,6 +19,9 @@ import com.myalc.fxrates.dto.api.CalculationResponse;
 import com.myalc.fxrates.dto.external.exchangeratesapiio.ExchangeratesapiioLatestRates;
 import com.myalc.fxrates.dto.external.fixerio.FixerioError;
 import com.myalc.fxrates.dto.external.fixerio.FixerioLatestRates;
+import com.myalc.fxrates.repository.db.CalculationRepository;
+import com.myalc.fxrates.repository.db.LatestRatesRepository;
+import com.myalc.fxrates.repository.db.RateRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +47,15 @@ public class TestUtils {
     
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private LatestRatesRepository latestRatesRepository;
+
+    @Autowired
+    private CalculationRepository calculationRepository;
+
+    @Autowired
+    private RateRepository rateRepository;
 
     public static final Long ts = 1642325375000L;   // millis
     public static final String date = "2022-01-16";
@@ -129,6 +141,12 @@ public class TestUtils {
         return list.stream().filter(e -> e.getSourceCurrency().equals(sourceCurrency) && e.getTargetCurrency().equals(targetCurrency)).map(e -> e.getTargetAmount()).findAny().orElse(0.0);
     }
 
+    public void cleatDb() {
+        latestRatesRepository.deleteAll();
+        calculationRepository.deleteAll();
+        rateRepository.deleteAll();
+    }
+
     public List<CacheManager> getCacheMgrs(BeanFactory beanFactory, List<String> names) {
         List<CacheManager> l = new ArrayList<>();
         names.stream().forEach(e -> {
@@ -138,16 +156,14 @@ public class TestUtils {
         return l;
     }
 
-    public List<String> getCacheDetails(List<CacheManager> caches) {
-        List<String> l = new ArrayList<>();
-        for (CacheManager mgr: caches) {
-            for (String name : mgr.getCacheNames()) {
-                l.add(String.format("cacheName:%s, cache:%s, native:%s", name, mgr.getCache(name), mgr.getCache(name).getNativeCache().toString()));
-            }
-        }
-        return l;
+    public CacheManager getCacheMgr(BeanFactory beanFactory, String name) {
+        return beanFactory.getBean(name, CacheManager.class);
     }
-    
+
+    public <T> T getCacheValue(BeanFactory beanFactory, String mgrName, String name, String key, Class<T> type) {
+        return this.getCacheMgr(beanFactory, mgrName).getCache(name).get(key, type);
+    }
+
     public void clearCaches(List<CacheManager> caches) {
         for (CacheManager mgr: caches) {
             for (String name : mgr.getCacheNames()) {

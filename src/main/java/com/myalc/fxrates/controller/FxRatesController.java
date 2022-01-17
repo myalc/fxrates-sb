@@ -55,7 +55,6 @@ public class FxRatesController {
     @GetMapping(path = "/api/v1/investment/currency/exchangerates/latest", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponse(description = "OK", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = RateResponse.class))} )
     @Cacheable(cacheNames = "FxRate", cacheManager = "FxRatesMgr", keyGenerator = "keyGenerator")
-    //@Cacheable(cacheNames = "FxRate", cacheManager = "FxRatesMgr", key="#sourceCurrency")
 	public ResponseEntity<RateResponse> latestExchangeRate(@RequestParam @Size(min = 3, max=3) String sourceCurrency, @RequestParam @Size(min = 3, max=3) String targetCurrency) {
         
         Rate rate = fxRatesService.getLatestExchangeRate(sourceCurrency, targetCurrency);
@@ -67,7 +66,6 @@ public class FxRatesController {
     @PostMapping(path = "/api/v1/investment/currency/calculation", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponse(description = "OK", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CalculationResponse.class))} )
     @Cacheable(cacheNames = "FxCalculation", cacheManager = "FxRatesMgr", keyGenerator = "keyGenerator")
-    //@Cacheable(cacheNames = "FxCalculation", cacheManager = "FxRatesMgr", key="#request.amount")
     public ResponseEntity<CalculationResponse> calculation(@Valid @RequestBody CalculationRequest request) {
     
         Calculation calculation = fxRatesService.getCalculation(request.getAmount(), request.getSourceCurrency(), request.getTargetCurrency());
@@ -80,7 +78,6 @@ public class FxRatesController {
     @ApiResponse(description = "OK", responseCode = "200", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = PaginatedCalculationResponse.class))} )
     @ApiResponse(description = "Conflict", responseCode = "409", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CustomAppError.class))} )
     @Cacheable(cacheNames = "PaginatedCalculations", cacheManager = "FxRatesMgr", keyGenerator = "keyGenerator")
-    //@Cacheable(cacheNames = "PaginatedCalculations", cacheManager = "FxRatesMgr", key="#date")
     public ResponseEntity<PaginatedCalculationResponse> calculations(@RequestParam(required = false)
                                                   @Pattern(regexp = "^[0-9]{4}-((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|(02)-(0[1-9]|[12][0-9]))$", message = "Please provide a valid ISO date") String date, 
                                                   @RequestParam(required = false)
@@ -93,7 +90,7 @@ public class FxRatesController {
         }
 
         PaginatedCalculationResponse paginated = fxRatesService.getCalculations(date, transactionId, page, size);
-        logger.info("calculations for parameter: {}, page: {}, size:{} --> currentSize: {}, totalItems: {}, totalPages: {}", StringUtils.isNotBlank(date) ? date : transactionId, page, size, paginated.getCalculations().size(), paginated.getTotalItems(), paginated.getTotalPages());
+        logger.info("calculations for parameter: {}, page: {}, size:{} --> currentSize: {}, totalItems: {}, totalPages: {}, list: {}", StringUtils.isNotBlank(date) ? date : transactionId, page, size, paginated.getCalculations().size(), paginated.getTotalItems(), paginated.getTotalPages(), paginated.getCalculations());
 
         return new ResponseEntity<>(paginated, HttpStatus.OK);
     }
