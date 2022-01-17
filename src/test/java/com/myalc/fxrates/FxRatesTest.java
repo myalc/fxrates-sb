@@ -151,7 +151,7 @@ public class FxRatesTest {
     /* Tests with mocked external repository */
 
     @Test
-    public void latestExchangeratesApiWithSuccess() throws Exception {
+    public void latestExchangeratesApiWithSuccessTest() throws Exception {
         
         MockRestServiceServer mockServer = testUtils.createMockServer(true, serviceProvider);
 
@@ -185,7 +185,7 @@ public class FxRatesTest {
     }
 
     @Test
-    public void latestExchangeratesApiWithError() throws Exception {
+    public void latestExchangeratesApiWithErrorTest() throws Exception {
         
         MockRestServiceServer mockServer = testUtils.createMockServer(false, serviceProvider);
 
@@ -259,10 +259,10 @@ public class FxRatesTest {
     //@Disabled
     public void latestExchangeratesApiCacheTest() throws Exception {
 
-        testUtils.cleatDb();
+        testUtils.clearDb();
         testUtils.clearCaches(testUtils.getCacheMgrs(beanFactory, mgrNames));
 
-        latestExchangeratesApiWithSuccess();
+        latestExchangeratesApiWithSuccessTest();
 
         LatestRates lr = testUtils.getCacheValue(beanFactory, "FixerIOMgr", "FixerioService", "FixerioRepository#getLatestExchangeRate#USD", LatestRates.class);
         logger.info("Cache: LatestRates -> {}", lr.toString());
@@ -303,7 +303,7 @@ public class FxRatesTest {
     //@Disabled
     public void calculationApiCacheTest() throws Exception {
 
-        testUtils.cleatDb();
+        testUtils.clearDb();
         testUtils.clearCaches(testUtils.getCacheMgrs(beanFactory, mgrNames));
         
         calculationApiTest();
@@ -336,7 +336,7 @@ public class FxRatesTest {
     //@Disabled
     public void calculationsApiCacheTest() throws Exception {
 
-        testUtils.cleatDb();
+        testUtils.clearDb();
         testUtils.clearCaches(testUtils.getCacheMgrs(beanFactory, mgrNames));
         
         calculationsApiTest();

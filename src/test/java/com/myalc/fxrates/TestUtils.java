@@ -141,7 +141,7 @@ public class TestUtils {
         return list.stream().filter(e -> e.getSourceCurrency().equals(sourceCurrency) && e.getTargetCurrency().equals(targetCurrency)).map(e -> e.getTargetAmount()).findAny().orElse(0.0);
     }
 
-    public void cleatDb() {
+    public void clearDb() {
         latestRatesRepository.deleteAll();
         calculationRepository.deleteAll();
         rateRepository.deleteAll();
