@@ -24,11 +24,8 @@ sudo apt-get install maven
 ## Local test and run
 ```sh
 cd fxrates-sb
-
 mvn spring-boot:run -Dmaven.test.skip 
 mvn spring-boot:run
-
-maven clean package
 mvn clean package
 java -jar target/fxrates-1.0-SNAPSHOT.jar com.myalc.fxrates.Application
 ```
