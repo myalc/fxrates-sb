@@ -23,13 +23,16 @@ public class FixerioRepository implements IExternalRepository {
     private RestTemplate restTemplate;
 
     @Value("${fixerio.latestrate.url}")
-    private String url;
+    private String baseUrl;
 
     @Value("${fixerio.acces_key:na}")
     private String key;
 
     @Value("${serviceProvider:fixerio}")
     private String serviceProvider;
+
+    @Value("${fixerio.useBase:false}")
+    private Boolean useBase;
     
     private final Logger logger = LoggerFactory.getLogger(FixerioRepository.class);
 
@@ -42,10 +45,15 @@ public class FixerioRepository implements IExternalRepository {
     @Cacheable(cacheNames = "FixerioService", cacheManager = "FixerIOMgr", keyGenerator = "keyGenerator")
     public LatestRates getLatestExchangeRate(String sourceCurrency) {
         
+        String url;
         Map<String, String> params = new HashMap<String, String>();
         params.put("access_key", key);
-        params.put("base", sourceCurrency);
-        url = url + "?access_key={access_key}&base={base}";
+        if (useBase) {
+            params.put("base", sourceCurrency);
+            url = baseUrl + "?access_key={access_key}&base={base}";
+        } else {
+            url = baseUrl + "?access_key={access_key}";
+        }
         FixerioLatestRates result = restTemplate.getForObject(url, FixerioLatestRates.class, params);
         
         if (result.isSuccess()) {
