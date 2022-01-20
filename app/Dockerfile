@@ -8,6 +8,6 @@ RUN apk add --update curl jq && rm -rf /var/cache/apk/*
 WORKDIR /usr/src/fxrates
 COPY --from=builder /usr/src/fxrates/target/fxrates-1.0-SNAPSHOT.jar .
 COPY --from=builder /usr/src/fxrates/src/main/resources/*.properties .
-EXPOSE 8080
+EXPOSE 9090
 ENV PROFILE=default
 ENTRYPOINT ["java", "-Dspring.profiles.active=${PROFILE}", "-jar", "fxrates-1.0-SNAPSHOT.jar", "com.myalc.fxrates.Application"]

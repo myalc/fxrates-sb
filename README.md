@@ -15,7 +15,7 @@ Simple foreign exchange application provides some APIs as below:
 * Custom exception handling
 
 
-## Installation
+## Local installation
 ```sh
 sudo apt-get install openjdk-8-jdk-headless
 sudo apt-get install maven
@@ -53,6 +53,7 @@ docker container prune
 docker rmi <image-id>
 ```
 
+
 ## Docker compose
 ```sh
 cd fxrates-sb
@@ -60,24 +61,55 @@ docker-compose build
 docker-compose up
 ```
 
-Use following command to get token from keycloak
-```sh
-docker exec -i app /bin/sh -c "curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=password' -d 'client_id=fxrates-app' -d 'client_secret=na3W0tkdwIBVCen3KCiiuo1xnqkQWl3w' -d 'username=myalc' -d 'password=123456' 'http://keycloak:8080/auth/realms/fxrates/protocol/openid-connect/token' | jq -r '.access_token'"
-```
-
 ## Keycloak
-* [http://localhost:8080/auth/admin](http://localhost:8080/auth/admin) (admin/123456)
+Keycloak is using as identity server. *keycloak/imports* directory contains predefined realm(fxrates), client(fxrates-app), user(myalc), and roles(read, calculate).
+* [http://localhost:28080/auth/admin](http://localhost:28080/auth/admin) (admin/123456)
+
 
 ## Postgres
 * Keycloak is using potgres database. *keycloak/db/postgres_data* directory contains postgres files. 
 * Use [pgAdmin](https://www.pgadmin.org/download/) to connect.
-
-
 
 ## API Docs
 * [http://localhost:9090/api-docs](http://localhost:9090/api-docs)
 * [http://localhost:9090/swagger-ui/index.html](http://localhost:9090/swagger-ui/index.html)
 * [https://editor.swagger.io/](https://editor.swagger.io/)
 
+
+## Get access token
+Use following command to get token from keycloak.
+```sh
+docker exec -i app /bin/sh -c "curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=password' -d 'client_id=fxrates-app' -d 'client_secret=na3W0tkdwIBVCen3KCiiuo1xnqkQWl3w' -d 'username=myalc' -d 'password=123456' 'http://keycloak:8080/auth/realms/fxrates/protocol/openid-connect/token' | jq -r '.access_token'"
+```
+
+## Postman collections
+Use collections in *postman-collection* folder or following commands with access_token. 
+```sh
+curl --location --request GET 'http://localhost:9090/api/v1/investment/currency/exchangerates/latest?sourceCurrency=USD&targetCurrency=EUR' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJSUzI1N...'
+```
+
+```sh
+curl --location --request POST 'http://localhost:9090/api/v1/investment/currency/calculation' \
+--header 'Authorization: Bearer eyJhbGciOiJSUzI1N...' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "amount": 44,
+    "sourceCurrency": "USD",
+    "targetCurrency": "EUR"
+}'
+```
+
+```sh
+curl --location --request GET 'http://localhost:9090/api/v1/investment/currency/calculations?date=2022-01-19&page=0&size=10' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJSUzI1N....'
+```
+
+
 ## H2 Database
-* [http://localhost:9090/h2-console](http://localhost:9090/h2-console)
+* [http://localhost:9090/h2-console](http://localhost:9090/h2-console) 
+* url: jdbc:h2:mem:fxratesdb
+* user: sa
+* passw: 123456

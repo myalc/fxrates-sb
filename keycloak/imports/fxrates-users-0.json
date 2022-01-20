@@ -1,8 +1,8 @@
 {
   "realm" : "fxrates",
   "users" : [ {
-    "id" : "15dc9d75-73ba-4120-993f-e8614d40b427",
-    "createdTimestamp" : 1642664361324,
+    "id" : "bbac0d53-5f3a-4430-b417-2b2db4990b70",
+    "createdTimestamp" : 1642705740526,
     "username" : "myalc",
     "enabled" : true,
     "totp" : false,
@@ -10,17 +10,31 @@
     "firstName" : "Mesut",
     "lastName" : "Yalcin",
     "credentials" : [ {
-      "id" : "9e36b65d-35df-494d-9655-a94302d59d04",
+      "id" : "934962dd-042a-43e4-81cc-92c6644a18f9",
       "type" : "password",
-      "createdDate" : 1642664377847,
-      "secretData" : "{\"value\":\"0gFLn33lesgnJdkzYnH1GzfnWoCHByCFG5YDaCGcfkIaS+yHtOVUz/MmS2OcHrBCMJJrKlLMMHJ1Q9oB9w3d3Q==\",\"salt\":\"4ekZDPvKD7XbuTblVKyPIQ==\",\"additionalParameters\":{}}",
+      "createdDate" : 1642705761443,
+      "secretData" : "{\"value\":\"qew9u9CGl0/E7WoDz9rQlAnt9/uvHeTW7iQ29iZaWhiIwYo0LgL41IbNIrxZ3moNtqyboY9UnZKgu2We5KGb+w==\",\"salt\":\"FFzF1DYGF8wEMlbACYiwvQ==\",\"additionalParameters\":{}}",
       "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
     } ],
     "disableableCredentialTypes" : [ ],
-    "requiredActions" : [ "UPDATE_PASSWORD" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "app-calculate", "app-read" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "f04e63e2-7177-4e71-9a35-8921573865c2",
+    "createdTimestamp" : 1642705254350,
+    "username" : "service-account-fxrates-app",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "serviceAccountClientId" : "fxrates-app",
+    "credentials" : [ ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-fxrates" ],
     "clientRoles" : {
-      "fxrates-app" : [ "read", "calculate" ]
+      "fxrates-app" : [ "uma_protection" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
