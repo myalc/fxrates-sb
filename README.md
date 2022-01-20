@@ -67,7 +67,7 @@ Keycloak is using as identity server. *keycloak/imports* directory contains pred
 
 
 ## Postgres
-* Keycloak is using potgres database. *keycloak/db/postgres_data* directory contains postgres files. 
+* Keycloak is using postgres database. *keycloak/db/postgres_data* directory contains postgres files. 
 * Use [pgAdmin](https://www.pgadmin.org/download/) to connect.
 
 ## API Docs
@@ -82,7 +82,7 @@ Use following command to get token from keycloak.
 docker exec -i app /bin/sh -c "curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=password' -d 'client_id=fxrates-app' -d 'client_secret=na3W0tkdwIBVCen3KCiiuo1xnqkQWl3w' -d 'username=myalc' -d 'password=123456' 'http://keycloak:8080/auth/realms/fxrates/protocol/openid-connect/token' | jq -r '.access_token'"
 ```
 
-## Postman collections
+## Postman collections or curl
 Use collections in *postman-collection* folder or following commands with access_token. 
 ```sh
 curl --location --request GET 'http://localhost:9090/api/v1/investment/currency/exchangerates/latest?sourceCurrency=USD&targetCurrency=EUR' \
