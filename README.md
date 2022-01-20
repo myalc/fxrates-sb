@@ -60,16 +60,24 @@ docker-compose build
 docker-compose up
 ```
 
+Use following command to get token from keycloak
+```sh
+docker exec -i app /bin/sh -c "curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=password' -d 'client_id=fxrates-app' -d 'client_secret=na3W0tkdwIBVCen3KCiiuo1xnqkQWl3w' -d 'username=myalc' -d 'password=123456' 'http://keycloak:8080/auth/realms/fxrates/protocol/openid-connect/token' | jq -r '.access_token'"
+```
+
 ## Keycloak
 * [http://localhost:8080/auth/admin](http://localhost:8080/auth/admin) (admin/123456)
 
+## Postgres
+* Keycloak is using potgres database. *keycloak/db/postgres_data* directory contains postgres files. 
+* Use [pgAdmin](https://www.pgadmin.org/download/) to connect.
 
 
 
 ## API Docs
-* [http://localhost:8080/api-docs](http://localhost:8080/api-docs)
-* [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+* [http://localhost:9090/api-docs](http://localhost:9090/api-docs)
+* [http://localhost:9090/swagger-ui/index.html](http://localhost:9090/swagger-ui/index.html)
 * [https://editor.swagger.io/](https://editor.swagger.io/)
 
 ## H2 Database
-[http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+* [http://localhost:9090/h2-console](http://localhost:9090/h2-console)

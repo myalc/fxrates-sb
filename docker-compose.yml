@@ -4,13 +4,14 @@ services:
   
   app:
     build: ./app/
+    container_name: app
     ports:
       - 9090:9090
     environment:
-      - FIXERIO_ACCESS_KEY=fixeriokey
+      - FIXERIO_ACCESS_KEY=564aa0931c06bd4b4d477ba2c76af977AA
       - EXCHANGERATESAPIIO_ACCESS_KEY=exchangeratesiokey
       - KEYCLOAK_ADDR=http://keycloak:8080/auth
-      - KEYCLOAK_CLIENT_SECRET=eG14qPYMsPWfoFVvBP4wArg6Mqiwnv5l
+      - KEYCLOAK_CLIENT_SECRET=na3W0tkdwIBVCen3KCiiuo1xnqkQWl3w
       #- PROFILE=default
       - PROFILE=staging
     command: -Dmaven.test.skip
@@ -22,13 +23,14 @@ services:
   
   keycloak:
     image: jboss/keycloak:16.1.0
+    container_name: keycloak
     ports:
-      - 8080:8080
+      - 28080:8080
       - 8443:8443
     volumes:
-      - ./keycloak/imports:/opt/jboss/keycloak/imports
+      #- ./keycloak/imports:/opt/jboss/keycloak/imports
       #- ./keycloak/imports:/tmp/keycloak-import
-      #- ./keycloak/exports:/tmp/keycloak-export
+      - ./keycloak/exports:/tmp/keycloak-export
     environment:
       - DB_DATABASE=keycloak
       - DB_USER=keycloak
@@ -40,19 +42,22 @@ services:
       - KEYCLOAK_PASSWORD=123456
       - JDBC_PARAMS='useSSL=false'
       - PROXY_ADDRESS_FORWARDING=true
+      - KEYCLOAK_LOGLEVEL=TRACE
       #- KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/realm-export.json -Dkeycloak.profile.feature.upload_scripts=enabled -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.realmName=fxrates
       #- KEYCLOAK_FRONTEND_URL=http://localhost:8080/*
       #- KEYCLOAK_FRONTEND_URL=http://localhost:9090/*
       #- KEYCLOAK_FRONTEND_URL=http://localhost:9091/*
-    #command: [ "-Dkeycloak.migration.action=export", "-Dkeycloak.migration.provider=dir", "-Dkeycloak.migration.dir=/tmp/keycloak-export", "-Dkeycloak.migration.usersExportStrategy=SAME_FILE", "-Dkeycloak.migration.realmName=fxrates" ]
+    command: [ "-Dkeycloak.migration.action=export", "-Dkeycloak.migration.provider=dir", "-Dkeycloak.migration.dir=/tmp/keycloak-export", "-Dkeycloak.migration.usersExportStrategy=SAME_FILE", "-Dkeycloak.migration.realmName=fxrates" ]
     #command: [ "-Dkeycloak.migration.action=import", "-Dkeycloak.migration.provider=dir", "-Dkeycloak.migration.dir=/tmp/keycloak-import", "-Dkeycloak.migration.strategy=IGNORE_EXISTING", "-Dkeycloak.migration.usersExportStrategy=SAME_FILE", "-Dkeycloak.migration.realmName=fxrates", "-Dkeycloak.profile.feature.upload_scripts=enabled" ]
+    #command: -Dkeycloak.frontendUrl=http://localhost:9090/*
     depends_on:
       - postgres
     networks:
       - auth-network
 
   postgres:
-    image: postgres:latest
+    image: postgres:alpine3.15
+    container_name: postgres
     ports:
       - 5432:5432
     environment:
@@ -72,5 +77,4 @@ services:
 
 networks:
   auth-network:
-    driver: bridge
   

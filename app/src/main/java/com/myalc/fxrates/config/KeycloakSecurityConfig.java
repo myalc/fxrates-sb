@@ -27,7 +27,7 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
 
         http.authorizeRequests()
             .antMatchers("/api/v1/investment/currency/exchangerates/latest").hasAnyRole("read")
-            .antMatchers("/api/v1/investment/currency/calculation").hasAnyRole("calculation")
+            .antMatchers("/api/v1/investment/currency/calculation").hasAnyRole("calculate")
             .antMatchers("/api/v1/investment/currency/calculations").hasAnyRole("read")
             .anyRequest()
             .permitAll()

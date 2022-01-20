@@ -4,7 +4,7 @@ WORKDIR /usr/src/fxrates
 RUN mvn package -Dmaven.test.skip
 
 FROM openjdk:8-jdk-alpine
-RUN apk add --update curl && rm -rf /var/cache/apk/*
+RUN apk add --update curl jq && rm -rf /var/cache/apk/*
 WORKDIR /usr/src/fxrates
 COPY --from=builder /usr/src/fxrates/target/fxrates-1.0-SNAPSHOT.jar .
 COPY --from=builder /usr/src/fxrates/src/main/resources/*.properties .
