@@ -41,6 +41,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 @Validated
 @OpenAPIDefinition(info = @Info(title = "FX Rates API", version = "3.0", description = "Foreign exchange rates information"))
 @ApiResponse(description = "Bad Request", responseCode = "400", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CustomAppError.class))} )
+@ApiResponse(description = "Unauthorized", responseCode = "401", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CustomAppError.class))} )
+@ApiResponse(description = "Forbidden", responseCode = "403", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CustomAppError.class))} )
 @ApiResponse(description = "Not Found", responseCode = "404", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CustomAppError.class))} )
 @ApiResponse(description = "Method Not Allowed", responseCode = "405", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CustomAppError.class))} )
 @ApiResponse(description = "Unsupported Media Type", responseCode = "415", content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = CustomAppError.class))} )

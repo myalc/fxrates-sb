@@ -1,0 +1,28 @@
+{
+  "realm" : "fxrates",
+  "users" : [ {
+    "id" : "15dc9d75-73ba-4120-993f-e8614d40b427",
+    "createdTimestamp" : 1642664361324,
+    "username" : "myalc",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "Mesut",
+    "lastName" : "Yalcin",
+    "credentials" : [ {
+      "id" : "9e36b65d-35df-494d-9655-a94302d59d04",
+      "type" : "password",
+      "createdDate" : 1642664377847,
+      "secretData" : "{\"value\":\"0gFLn33lesgnJdkzYnH1GzfnWoCHByCFG5YDaCGcfkIaS+yHtOVUz/MmS2OcHrBCMJJrKlLMMHJ1Q9oB9w3d3Q==\",\"salt\":\"4ekZDPvKD7XbuTblVKyPIQ==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ "UPDATE_PASSWORD" ],
+    "realmRoles" : [ "default-roles-fxrates" ],
+    "clientRoles" : {
+      "fxrates-app" : [ "read", "calculate" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}

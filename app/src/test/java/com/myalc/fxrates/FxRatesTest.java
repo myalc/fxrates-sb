@@ -22,7 +22,6 @@ import com.myalc.fxrates.dto.api.RateResponse;
 import com.myalc.fxrates.model.LatestRates;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -46,7 +45,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 @Import(value = {FunctionalTest.class, TestUtils.class})
 @TestInstance(Lifecycle.PER_CLASS)
 public class FxRatesTest {
@@ -256,7 +255,7 @@ public class FxRatesTest {
     List<String> mgrNames = Arrays.asList("FxRatesMgr", "FixerIOMgr", "ExchangeratesapiIOMgr");
 
     @Test
-    //@Disabled
+    //@org.junit.jupiter.api.Disabled
     public void latestExchangeratesApiCacheTest() throws Exception {
 
         testUtils.clearDb();
@@ -300,7 +299,7 @@ public class FxRatesTest {
     }
 
     @Test
-    //@Disabled
+    //@org.junit.jupiter.api.Disabled
     public void calculationApiCacheTest() throws Exception {
 
         testUtils.clearDb();
@@ -333,7 +332,7 @@ public class FxRatesTest {
     }
 
     @Test
-    //@Disabled
+    //@org.junit.jupiter.api.Disabled
     public void calculationsApiCacheTest() throws Exception {
 
         testUtils.clearDb();

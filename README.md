@@ -53,6 +53,19 @@ docker container prune
 docker rmi <image-id>
 ```
 
+## Docker compose
+```sh
+cd fxrates-sb
+docker-compose build
+docker-compose up
+```
+
+## Keycloak
+* [http://localhost:8080/auth/admin](http://localhost:8080/auth/admin) (admin/123456)
+
+
+
+
 ## API Docs
 * [http://localhost:8080/api-docs](http://localhost:8080/api-docs)
 * [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
