@@ -67,7 +67,7 @@ Keycloak is using as identity server. *keycloak/imports* directory contains pred
 
 
 ## Postgres
-* Keycloak is using postgres database. *keycloak/db/postgres_data* directory contains postgres files. 
+* Keycloak is using postgres database. *db/postgres_data* directory contains postgres files. 
 * Use [pgAdmin](https://www.pgadmin.org/download/) to connect.
 * Check line endings in *db/01-init.sh*  file. It should be linux style. 
 
