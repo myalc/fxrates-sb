@@ -34,3 +34,4 @@ build/
 
 # database files
 keycloak/db/postgres_data
+db/postgres_data

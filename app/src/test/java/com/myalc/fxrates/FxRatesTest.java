@@ -74,10 +74,11 @@ public class FxRatesTest {
         this.beanFactory = beanFactory;
     }
 
-    @BeforeAll
+    @BeforeAll    
 	void contextLoads() throws SQLException {
         Connection connection = DataSourceUtils.getConnection(jdbcTemplate.getDataSource());
         String dbProductName = connection.getMetaData().getDatabaseProductName();
+        logger.warn("DB -----------> {}", dbProductName);
         assertTrue("H2".equals(dbProductName));
 	}
 

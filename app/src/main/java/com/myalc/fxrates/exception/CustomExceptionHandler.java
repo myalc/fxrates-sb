@@ -27,7 +27,7 @@ public class CustomExceptionHandler {
     public ResponseEntity<CustomAppError> customExceptionHandler(CustomException ex, WebRequest request) {
 
         CustomAppError message = new CustomAppError(String.valueOf(ex.getStatus().value()), ex.getMessage(), ex.getErrors());
-        logger.warn("CustomException: status: {}, message: {}, errors: {}, request: {}", ex.getStatus(), ex.getMessage(), ex.getErrors().toString(), request.toString());
+        logger.warn("CustomException: status: {}, message: {}, errors: {}, request: {}", ex.getStatus(), ex.getMessage(), ex.getErrors(), request.toString());
         return new ResponseEntity<CustomAppError>(message, ex.getStatus());
     }
 

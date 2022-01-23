@@ -19,7 +19,7 @@ public class RateMapper {
                 return rate;
             }
         }
-        throw new CustomException(HttpStatus.NOT_FOUND, "target currency {} cannot find", targetCurrency);
+        throw new CustomException(HttpStatus.NOT_FOUND, String.format("target currency %s cannot find", targetCurrency));
     }
 
 }

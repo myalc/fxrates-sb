@@ -1,5 +1,6 @@
 package com.myalc.fxrates.exception;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class CustomException extends RuntimeException {
 
     private HttpStatus status;
     private String message; 
-    private List<String> errors;
+    private List<String> errors = new ArrayList<>();
 
     public CustomException(HttpStatus status, String message) {
         this.status = status;

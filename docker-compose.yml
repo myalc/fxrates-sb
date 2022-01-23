@@ -5,15 +5,21 @@ services:
   app:
     build: ./app/
     container_name: app
+    restart: on-failure
     ports:
       - 9090:9090
     environment:
-      - FIXERIO_ACCESS_KEY=fixeiokey
+      - FIXERIO_ACCESS_KEY=fixeriokey
       - EXCHANGERATESAPIIO_ACCESS_KEY=exchangeratesiokey
       - KEYCLOAK_ADDR=http://keycloak:8080/auth
       - KEYCLOAK_CLIENT_SECRET=na3W0tkdwIBVCen3KCiiuo1xnqkQWl3w
       #- PROFILE=default
       - PROFILE=staging
+      - DB_DATABASE=appdb
+      - DB_USER=appdbuser
+      - DB_PASSWORD=123456
+      - DB_HOST=postgres
+      - DB_PORT=5432
     command: -Dmaven.test.skip
     depends_on:
       - postgres
@@ -31,8 +37,8 @@ services:
       - ./keycloak/imports:/tmp/keycloak-import
       #- ./keycloak/exports:/tmp/keycloak-export
     environment:
-      - DB_DATABASE=keycloak
-      - DB_USER=keycloak
+      - DB_DATABASE=kcdb
+      - DB_USER=kcdbuser
       - DB_PASSWORD=123456
       - DB_VENDOR=postgres
       - DB_ADDR=postgres
@@ -55,8 +61,14 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_DB=keycloak
-      - POSTGRES_USER=keycloak
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=123456
+      - KEYCLOAK_DB_USER=kcdbuser
+      - KEYCLOAK_DB_PASS=123456
+      - KEYCLOAK_DB_NAME=kcdb
+      - APP_DB_USER=appdbuser
+      - APP_DB_PASS=123456
+      - APP_DB_NAME=appdb
       - POSTGRES_PASSWORD=123456
       - PGDATA=/var/lib/postgresql/data/db-files/
     logging:
@@ -64,8 +76,9 @@ services:
         max-size: 10m
         max-file: "3"
     volumes:
-      - ./keycloak/db/postgres_data:/var/lib/postgresql/data
-      - ./keycloak/db/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./db/postgres_data:/var/lib/postgresql/data
+      #- ./db/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./db/01-init.sh:/docker-entrypoint-initdb.d/01-init.sh
     networks:
       - auth-network
 
